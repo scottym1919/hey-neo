@@ -1,0 +1,694 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		/* iOS App Files */
+		A1000001001 /* HeyNeoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001000 /* HeyNeoApp.swift */; };
+		A1000002001 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000 /* HomeView.swift */; };
+		A1000003001 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003000 /* HomeViewModel.swift */; };
+		A1000004001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004000 /* SettingsView.swift */; };
+		A1000005001 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005000 /* MessageBubble.swift */; };
+		A1000006001 /* GatewayClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006000 /* GatewayClient.swift */; };
+		A1000007001 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007000 /* SpeechRecognizer.swift */; };
+		A1000008001 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008000 /* AppSettings.swift */; };
+		A1000009001 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000009000 /* WatchConnectivityManager.swift */; };
+		A1000010001 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000010000 /* Message.swift */; };
+		A1000011001 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000011000 /* ConnectionState.swift */; };
+		A1000012001 /* GatewayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000012000 /* GatewayMessage.swift */; };
+		A1000013001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000013000 /* Assets.xcassets */; };
+		
+		/* watchOS App Files */
+		A2000001001 /* HeyNeoWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000 /* HeyNeoWatchApp.swift */; };
+		A2000002001 /* HomeWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002000 /* HomeWatchView.swift */; };
+		A2000003001 /* WatchPhoneConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003000 /* WatchPhoneConnectivity.swift */; };
+		A2000004001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000004000 /* Assets.xcassets */; };
+		
+		/* Embed Watch App */
+		A3000001001 /* HeyNeoWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A2000000000 /* HeyNeoWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A3000002000 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2000000001;
+			remoteInfo = HeyNeoWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A3000003000 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A3000001001 /* HeyNeoWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		/* iOS App */
+		A1000000000 /* HeyNeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeyNeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000001000 /* HeyNeoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeyNeoApp.swift; sourceTree = "<group>"; };
+		A1000002000 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A1000003000 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		A1000004000 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A1000005000 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		A1000006000 /* GatewayClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayClient.swift; sourceTree = "<group>"; };
+		A1000007000 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		A1000008000 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		A1000009000 /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
+		A1000010000 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		A1000011000 /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
+		A1000012000 /* GatewayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayMessage.swift; sourceTree = "<group>"; };
+		A1000013000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		
+		/* watchOS App */
+		A2000000000 /* HeyNeoWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeyNeoWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000001000 /* HeyNeoWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeyNeoWatchApp.swift; sourceTree = "<group>"; };
+		A2000002000 /* HomeWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWatchView.swift; sourceTree = "<group>"; };
+		A2000003000 /* WatchPhoneConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPhoneConnectivity.swift; sourceTree = "<group>"; };
+		A2000004000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1000100000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2000100000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A0000000001 = {
+			isa = PBXGroup;
+			children = (
+				A0100000000 /* HeyNeo */,
+				A0200000000 /* HeyNeoWatch */,
+				A0300000000 /* Shared */,
+				A0400000000 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A0100000000 /* HeyNeo */ = {
+			isa = PBXGroup;
+			children = (
+				A0100001000 /* App */,
+				A0100002000 /* Core */,
+				A0100003000 /* Features */,
+				A0100004000 /* Resources */,
+			);
+			path = HeyNeo;
+			sourceTree = "<group>";
+		};
+		A0100001000 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A1000001000 /* HeyNeoApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A0100002000 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A0100002001 /* Gateway */,
+				A0100002002 /* Speech */,
+				A0100002003 /* Settings */,
+				A1000009000 /* WatchConnectivityManager.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A0100002001 /* Gateway */ = {
+			isa = PBXGroup;
+			children = (
+				A1000006000 /* GatewayClient.swift */,
+			);
+			path = Gateway;
+			sourceTree = "<group>";
+		};
+		A0100002002 /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				A1000007000 /* SpeechRecognizer.swift */,
+			);
+			path = Speech;
+			sourceTree = "<group>";
+		};
+		A0100002003 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A1000008000 /* AppSettings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A0100003000 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				A0100003001 /* Home */,
+				A0100003002 /* Settings */,
+				A0100003003 /* Conversation */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		A0100003001 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				A1000002000 /* HomeView.swift */,
+				A1000003000 /* HomeViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A0100003002 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A1000004000 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A0100003003 /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				A1000005000 /* MessageBubble.swift */,
+			);
+			path = Conversation;
+			sourceTree = "<group>";
+		};
+		A0100004000 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A1000013000 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A0200000000 /* HeyNeoWatch */ = {
+			isa = PBXGroup;
+			children = (
+				A0200001000 /* App */,
+				A0200002000 /* Core */,
+				A0200003000 /* Features */,
+				A0200004000 /* Resources */,
+			);
+			path = HeyNeoWatch;
+			sourceTree = "<group>";
+		};
+		A0200001000 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A2000001000 /* HeyNeoWatchApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A0200002000 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A2000003000 /* WatchPhoneConnectivity.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A0200003000 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				A2000002000 /* HomeWatchView.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		A0200004000 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A2000004000 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A0300000000 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A0300001000 /* Models */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A0300001000 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1000010000 /* Message.swift */,
+				A1000011000 /* ConnectionState.swift */,
+				A1000012000 /* GatewayMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A0400000000 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000 /* HeyNeo.app */,
+				A2000000000 /* HeyNeoWatch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1000000001 /* HeyNeo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1000200000 /* Build configuration list for PBXNativeTarget "HeyNeo" */;
+			buildPhases = (
+				A1000100001 /* Sources */,
+				A1000100000 /* Frameworks */,
+				A1000100002 /* Resources */,
+				A3000003000 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A3000002001 /* PBXTargetDependency */,
+			);
+			name = HeyNeo;
+			productName = HeyNeo;
+			productReference = A1000000000 /* HeyNeo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A2000000001 /* HeyNeoWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2000200000 /* Build configuration list for PBXNativeTarget "HeyNeoWatch" */;
+			buildPhases = (
+				A2000100001 /* Sources */,
+				A2000100000 /* Frameworks */,
+				A2000100002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HeyNeoWatch;
+			productName = HeyNeoWatch;
+			productReference = A2000000000 /* HeyNeoWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A0000000000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					A1000000001 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					A2000000001 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = A0000000002 /* Build configuration list for PBXProject "HeyNeo" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A0000000001;
+			productRefGroup = A0400000000 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1000000001 /* HeyNeo */,
+				A2000000001 /* HeyNeoWatch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1000100002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000013001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2000100002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2000004001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1000100001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001001 /* HeyNeoApp.swift in Sources */,
+				A1000002001 /* HomeView.swift in Sources */,
+				A1000003001 /* HomeViewModel.swift in Sources */,
+				A1000004001 /* SettingsView.swift in Sources */,
+				A1000005001 /* MessageBubble.swift in Sources */,
+				A1000006001 /* GatewayClient.swift in Sources */,
+				A1000007001 /* SpeechRecognizer.swift in Sources */,
+				A1000008001 /* AppSettings.swift in Sources */,
+				A1000009001 /* WatchConnectivityManager.swift in Sources */,
+				A1000010001 /* Message.swift in Sources */,
+				A1000011001 /* ConnectionState.swift in Sources */,
+				A1000012001 /* GatewayMessage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2000100001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2000001001 /* HeyNeoWatchApp.swift in Sources */,
+				A2000002001 /* HomeWatchView.swift in Sources */,
+				A2000003001 /* WatchPhoneConnectivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A3000002001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2000000001 /* HeyNeoWatch */;
+			targetProxy = A3000002000 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A0000001000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A0000001001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A1000200001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Hey Neo";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access to transcribe your voice commands.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hey Neo uses speech recognition to understand your voice commands.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hey-neo.ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A1000200002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Hey Neo";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access to transcribe your voice commands.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hey Neo uses speech recognition to understand your voice commands.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hey-neo.ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A2000200001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Hey Neo";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access to transcribe your voice commands.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hey Neo uses speech recognition to understand your voice commands.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.hey-neo.ios";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hey-neo.ios.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A2000200002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Hey Neo";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access to transcribe your voice commands.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hey Neo uses speech recognition to understand your voice commands.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.hey-neo.ios";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hey-neo.ios.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A0000000002 /* Build configuration list for PBXProject "HeyNeo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0000001000 /* Debug */,
+				A0000001001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1000200000 /* Build configuration list for PBXNativeTarget "HeyNeo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000200001 /* Debug */,
+				A1000200002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A2000200000 /* Build configuration list for PBXNativeTarget "HeyNeoWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2000200001 /* Debug */,
+				A2000200002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A0000000000 /* Project object */;
+}
