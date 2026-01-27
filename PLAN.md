@@ -22,14 +22,14 @@ A native iOS app with watchOS companion that lets you say "Hey Neo" (or tap) to 
 
 ## Features
 
-### Phase 1: Core (MVP)
-- [ ] iOS app with push-to-talk button
-- [ ] Speech recognition (on-device)
-- [ ] WebSocket connection to Clawdbot Gateway
-- [ ] Send transcribed text as messages
-- [ ] Receive and display responses
-- [ ] Settings: Gateway URL, auth token
-- [ ] watchOS companion with push-to-talk
+### Phase 1: Core (MVP) ✅
+- [x] iOS app with push-to-talk button
+- [x] Speech recognition (on-device)
+- [x] WebSocket connection to Clawdbot Gateway
+- [x] Send transcribed text as messages
+- [x] Receive and display responses
+- [x] Settings: Gateway URL, auth token
+- [x] watchOS companion with push-to-talk
 
 ### Phase 2: Voice Wake
 - [ ] Always-on voice wake detection ("Hey Neo")
