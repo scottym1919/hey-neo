@@ -4,13 +4,16 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     @EnvironmentObject private var settings: AppSettings
+    @EnvironmentObject private var textToSpeech: TextToSpeech
     
     @State private var showSettings = false
     
-    init(gateway: GatewayClient, speechRecognizer: SpeechRecognizer) {
+    init(gateway: GatewayClient, speechRecognizer: SpeechRecognizer, textToSpeech: TextToSpeech, settings: AppSettings) {
         _viewModel = StateObject(wrappedValue: HomeViewModel(
             gateway: gateway,
-            speechRecognizer: speechRecognizer
+            speechRecognizer: speechRecognizer,
+            textToSpeech: textToSpeech,
+            settings: settings
         ))
     }
     
@@ -30,19 +33,40 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        viewModel.clearConversation()
-                    } label: {
-                        Image(systemName: "trash")
+                    HStack(spacing: 16) {
+                        Button {
+                            viewModel.clearConversation()
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                        .disabled(viewModel.messages.isEmpty)
+                        
+                        // TTS toggle
+                        Button {
+                            viewModel.speakResponses.toggle()
+                        } label: {
+                            Image(systemName: viewModel.speakResponses ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                        }
                     }
-                    .disabled(viewModel.messages.isEmpty)
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showSettings = true
-                    } label: {
-                        Image(systemName: "gear")
+                    HStack(spacing: 16) {
+                        // Stop speaking button (when active)
+                        if viewModel.isSpeaking {
+                            Button {
+                                viewModel.stopSpeaking()
+                            } label: {
+                                Image(systemName: "stop.circle.fill")
+                                    .foregroundStyle(.red)
+                            }
+                        }
+                        
+                        Button {
+                            showSettings = true
+                        } label: {
+                            Image(systemName: "gear")
+                        }
                     }
                 }
             }
@@ -233,7 +257,9 @@ struct PushToTalkButton: View {
     let settings = AppSettings()
     let gateway = GatewayClient(settings: settings)
     let speech = SpeechRecognizer()
+    let tts = TextToSpeech()
     
-    return HomeView(gateway: gateway, speechRecognizer: speech)
+    HomeView(gateway: gateway, speechRecognizer: speech, textToSpeech: tts, settings: settings)
         .environmentObject(settings)
+        .environmentObject(tts)
 }

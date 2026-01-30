@@ -4,6 +4,7 @@ import SwiftUI
 struct HeyNeoApp: App {
     @StateObject private var settings = AppSettings()
     @StateObject private var speechRecognizer = SpeechRecognizer()
+    @StateObject private var textToSpeech = TextToSpeech()
     
     // Gateway client is created with settings
     @State private var gateway: GatewayClient?
@@ -15,9 +16,10 @@ struct HeyNeoApp: App {
         WindowGroup {
             Group {
                 if let gateway = gateway {
-                    HomeView(gateway: gateway, speechRecognizer: speechRecognizer)
+                    HomeView(gateway: gateway, speechRecognizer: speechRecognizer, textToSpeech: textToSpeech, settings: settings)
                         .environmentObject(settings)
                         .environmentObject(watchConnectivity)
+                        .environmentObject(textToSpeech)
                 } else {
                     ProgressView("Loading...")
                         .task {

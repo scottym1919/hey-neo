@@ -1,19 +1,12 @@
 import SwiftUI
-import Speech
-import AVFoundation
+import WatchKit
 
-/// Main watch view with push-to-talk
+/// Main watch view - relays to phone for speech recognition
 struct HomeWatchView: View {
     @EnvironmentObject private var connectivity: WatchPhoneConnectivity
     
-    @State private var isRecording = false
-    @State private var transcribedText = ""
-    @State private var errorMessage: String?
-    @State private var speechRecognizer: SFSpeechRecognizer?
-    @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-    @State private var recognitionTask: SFSpeechRecognitionTask?
-    @State private var audioEngine: AVAudioEngine?
-    @State private var isAuthorized = false
+    @State private var isWaiting = false
+    @State private var showTextInput = false
     
     var body: some View {
         NavigationStack {
@@ -42,176 +35,102 @@ struct HomeWatchView: View {
                 
                 Spacer()
                 
-                // Transcription while recording
-                if isRecording && !transcribedText.isEmpty {
-                    Text(transcribedText)
+                if isWaiting {
+                    ProgressView()
+                        .scaleEffect(0.8)
+                    Text("Sending...")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
-                        .lineLimit(2)
-                }
-                
-                // Push-to-talk button
-                Button {
-                    // Toggle recording
-                } label: {
-                    ZStack {
-                        Circle()
-                            .fill(isRecording ? .red : .blue)
-                            .frame(width: 60, height: 60)
-                        
-                        Image(systemName: isRecording ? "waveform" : "mic.fill")
-                            .font(.title2)
-                            .foregroundStyle(.white)
+                } else {
+                    // Dictation button - uses watchOS built-in dictation
+                    Button {
+                        showTextInput = true
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .fill(.blue)
+                                .frame(width: 60, height: 60)
+                            
+                            Image(systemName: "mic.fill")
+                                .font(.title2)
+                                .foregroundStyle(.white)
+                        }
                     }
-                }
-                .buttonStyle(.plain)
-                .simultaneousGesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { _ in
-                            if !isRecording {
-                                startRecording()
-                            }
-                        }
-                        .onEnded { _ in
-                            stopRecordingAndSend()
-                        }
-                )
-                .disabled(!isAuthorized || !connectivity.isReachable)
-                .opacity((isAuthorized && connectivity.isReachable) ? 1.0 : 0.5)
-                
-                Text(isRecording ? "Release to send" : "Hold to talk")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                
-                // Error message
-                if let error = errorMessage {
-                    Text(error)
+                    .buttonStyle(.plain)
+                    .disabled(!connectivity.isReachable)
+                    .opacity(connectivity.isReachable ? 1.0 : 0.5)
+                    
+                    Text("Tap to speak")
                         .font(.caption2)
-                        .foregroundStyle(.red)
-                        .lineLimit(2)
+                        .foregroundStyle(.secondary)
+                }
+                
+                if !connectivity.isReachable {
+                    Text("iPhone not reachable")
+                        .font(.caption2)
+                        .foregroundStyle(.orange)
                 }
             }
             .padding()
             .navigationTitle("Hey Neo")
             .navigationBarTitleDisplayMode(.inline)
-            .task {
-                await requestAuthorization()
+            .sheet(isPresented: $showTextInput) {
+                DictationView { text in
+                    sendMessage(text)
+                }
+            }
+            .onAppear {
                 connectivity.refreshConnectionState()
             }
         }
     }
     
-    // MARK: - Speech Recognition
-    
-    private func requestAuthorization() async {
-        speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
+    private func sendMessage(_ text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
         
-        let speechStatus = await withCheckedContinuation { continuation in
-            SFSpeechRecognizer.requestAuthorization { status in
-                continuation.resume(returning: status)
-            }
+        isWaiting = true
+        WKInterfaceDevice.current().play(.click)
+        
+        connectivity.sendChatMessage(trimmed)
+        
+        // Reset after a delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            isWaiting = false
+            WKInterfaceDevice.current().play(.success)
         }
-        
-        guard speechStatus == .authorized else {
-            errorMessage = "Speech not authorized"
-            return
-        }
-        
-        let audioStatus = await AVAudioApplication.requestRecordPermission()
-        
-        guard audioStatus else {
-            errorMessage = "Mic not authorized"
-            return
-        }
-        
-        isAuthorized = true
     }
+}
+
+/// Simple dictation input view
+struct DictationView: View {
+    @Environment(\.dismiss) private var dismiss
+    let onSubmit: (String) -> Void
     
-    private func startRecording() {
-        guard isAuthorized,
-              let speechRecognizer = speechRecognizer,
-              speechRecognizer.isAvailable else {
-            return
-        }
-        
-        recognitionTask?.cancel()
-        recognitionTask = nil
-        
-        do {
-            let audioSession = AVAudioSession.sharedInstance()
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+    @State private var text = ""
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Say your message")
+                .font(.headline)
             
-            audioEngine = AVAudioEngine()
-            guard let audioEngine = audioEngine else { return }
+            TextField("Message", text: $text)
+                .multilineTextAlignment(.center)
             
-            let inputNode = audioEngine.inputNode
-            
-            recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-            guard let recognitionRequest = recognitionRequest else { return }
-            
-            if speechRecognizer.supportsOnDeviceRecognition {
-                recognitionRequest.requiresOnDeviceRecognition = true
-            }
-            recognitionRequest.shouldReportPartialResults = true
-            
-            transcribedText = ""
-            
-            recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
-                if let result = result {
-                    transcribedText = result.bestTranscription.formattedString
+            HStack {
+                Button("Cancel") {
+                    dismiss()
                 }
+                .foregroundStyle(.red)
+                
+                Button("Send") {
+                    onSubmit(text)
+                    dismiss()
+                }
+                .disabled(text.trimmingCharacters(in: .whitespaces).isEmpty)
             }
-            
-            let recordingFormat = inputNode.outputFormat(forBus: 0)
-            inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
-                self.recognitionRequest?.append(buffer)
-            }
-            
-            audioEngine.prepare()
-            try audioEngine.start()
-            
-            isRecording = true
-            errorMessage = nil
-            
-            // Haptic feedback
-            WKInterfaceDevice.current().play(.start)
-            
-        } catch {
-            errorMessage = error.localizedDescription
         }
-    }
-    
-    private func stopRecordingAndSend() {
-        guard isRecording else { return }
-        
-        audioEngine?.stop()
-        audioEngine?.inputNode.removeTap(onBus: 0)
-        audioEngine = nil
-        
-        recognitionRequest?.endAudio()
-        recognitionRequest = nil
-        
-        recognitionTask?.cancel()
-        recognitionTask = nil
-        
-        try? AVAudioSession.sharedInstance().setActive(false)
-        
-        isRecording = false
-        
-        // Haptic feedback
-        WKInterfaceDevice.current().play(.stop)
-        
-        // Send if we have text
-        let finalText = transcribedText.trimmingCharacters(in: .whitespacesAndNewlines)
-        transcribedText = ""
-        
-        guard !finalText.isEmpty else { return }
-        
-        connectivity.sendChatMessage(finalText)
-        
-        // Success haptic
-        WKInterfaceDevice.current().play(.success)
+        .padding()
     }
 }
 

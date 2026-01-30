@@ -18,6 +18,12 @@ final class AppSettings: ObservableObject {
         }
     }
     
+    @Published var speakResponses: Bool {
+        didSet {
+            UserDefaults.standard.set(speakResponses, forKey: Keys.speakResponses)
+        }
+    }
+    
     // MARK: - Keychain Token
     
     var gatewayToken: String {
@@ -46,6 +52,7 @@ final class AppSettings: ObservableObject {
         static let gatewayURL = "gatewayURL"
         static let gatewayToken = "gatewayToken"
         static let autoConnect = "autoConnect"
+        static let speakResponses = "speakResponses"
     }
     
     // MARK: - Initialization
@@ -53,6 +60,10 @@ final class AppSettings: ObservableObject {
     init() {
         self.gatewayURL = UserDefaults.standard.string(forKey: Keys.gatewayURL) ?? ""
         self.autoConnect = UserDefaults.standard.bool(forKey: Keys.autoConnect)
+        // Default to true for TTS if not set
+        self.speakResponses = UserDefaults.standard.object(forKey: Keys.speakResponses) == nil 
+            ? true 
+            : UserDefaults.standard.bool(forKey: Keys.speakResponses)
     }
 }
 

@@ -69,10 +69,10 @@ struct ConnectParams: Codable, Sendable {
             minProtocol: 3,
             maxProtocol: 3,
             client: ClientInfo(
-                id: "hey-neo-ios",
+                id: "clawdbot-ios",
                 version: "1.0.0",
                 platform: "ios",
-                mode: "operator"
+                mode: "ui"
             ),
             role: "operator",
             scopes: ["operator.read", "operator.write"],
@@ -94,7 +94,15 @@ struct AuthParams: Codable, Sendable {
 
 /// Parameters for sending a chat message
 struct ChatSendParams: Codable, Sendable {
-    let text: String
+    let sessionKey: String
+    let message: String
+    let idempotencyKey: String
+    
+    init(sessionKey: String, message: String) {
+        self.sessionKey = sessionKey
+        self.message = message
+        self.idempotencyKey = UUID().uuidString
+    }
 }
 
 // MARK: - Incoming Messages (Gateway → Client)
@@ -141,24 +149,67 @@ struct GatewayEvent: Codable, Sendable {
 
 /// Flexible payload for events
 struct EventPayload: Codable, Sendable {
-    // For chat.chunk events
-    let text: String?
-    let chunk: String?
-    let delta: String?
+    // For chat events
+    let runId: String?
+    let sessionKey: String?
+    let state: String?  // "delta", "final", "error"
+    let seq: Int?
     
-    // For chat.message events
-    let role: String?
-    let content: String?
-    let message: MessagePayload?
+    // The message object
+    let message: ChatMessagePayload?
     
-    // Generic
+    // For error state
+    let errorMessage: String?
+    
+    // Generic fallback
     let data: [String: AnyCodable]?
+    
+    /// Extract the text content from the message
+    var textContent: String? {
+        guard let content = message?.content else { return nil }
+        // Content is an array of content blocks - extract all text
+        let texts = content.compactMap { block -> String? in
+            // Accept if type is "text" or nil (fallback)
+            if block.type == "text" || block.type == nil {
+                return block.text
+            }
+            return nil
+        }
+        let result = texts.joined()
+        return result.isEmpty ? nil : result
+    }
 }
 
-struct MessagePayload: Codable, Sendable {
+struct ChatMessagePayload: Codable, Sendable {
     let role: String?
-    let content: String?
+    let content: [ContentBlock]?
+    let timestamp: Int?
+}
+
+struct ContentBlock: Codable, Sendable {
+    let type: String?  // "text", "image", etc. - optional for robustness
     let text: String?
+    
+    // Handle both {"type": "text", "text": "..."} and plain strings
+    init(from decoder: Decoder) throws {
+        // Try decoding as object first
+        if let container = try? decoder.container(keyedBy: CodingKeys.self) {
+            type = try? container.decode(String.self, forKey: .type)
+            text = try? container.decode(String.self, forKey: .text)
+        } else if let singleValue = try? decoder.singleValueContainer(),
+                  let stringValue = try? singleValue.decode(String.self) {
+            // Plain string content
+            type = "text"
+            text = stringValue
+        } else {
+            type = nil
+            text = nil
+        }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case type, text
+    }
 }
 
 /// Type-erased codable for flexible JSON
@@ -203,6 +254,27 @@ struct AnyCodable: Codable, Sendable {
             try container.encodeNil()
         }
     }
+}
+
+// MARK: - Outgoing Events (Client → Gateway)
+
+/// An event frame sent to the Gateway (for subscriptions, etc.)
+struct GatewayOutgoingEvent: Codable, Sendable {
+    let type: String = "event"
+    let event: String
+    let payloadJSON: String
+    
+    init(event: String, payload: Codable) throws {
+        self.event = event
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(payload)
+        self.payloadJSON = String(data: data, encoding: .utf8) ?? "{}"
+    }
+}
+
+/// Payload for chat.subscribe event
+struct ChatSubscribePayload: Codable, Sendable {
+    let sessionKey: String
 }
 
 // MARK: - Raw Frame Parsing

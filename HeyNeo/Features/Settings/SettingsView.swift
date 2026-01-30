@@ -54,8 +54,11 @@ struct SettingsView: View {
                 
                 Section {
                     Toggle("Auto-connect on launch", isOn: $settings.autoConnect)
+                    Toggle("Speak responses aloud", isOn: $settings.speakResponses)
                 } header: {
                     Text("Behavior")
+                } footer: {
+                    Text("When enabled, Neo will speak assistant responses using text-to-speech")
                 }
                 
                 Section {
