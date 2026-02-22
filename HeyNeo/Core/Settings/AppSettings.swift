@@ -23,7 +23,51 @@ final class AppSettings: ObservableObject {
             UserDefaults.standard.set(speakResponses, forKey: Keys.speakResponses)
         }
     }
-    
+
+    // MARK: - Wake Word Settings
+
+    @Published var wakeWordEnabled: Bool {
+        didSet {
+            UserDefaults.standard.set(wakeWordEnabled, forKey: Keys.wakeWordEnabled)
+        }
+    }
+
+    @Published var wakeWordSensitivity: Float {
+        didSet {
+            UserDefaults.standard.set(wakeWordSensitivity, forKey: Keys.wakeWordSensitivity)
+        }
+    }
+
+    /// Which built-in keyword to use, or empty string for custom .ppn file.
+    @Published var wakeWordKeyword: String {
+        didSet {
+            UserDefaults.standard.set(wakeWordKeyword, forKey: Keys.wakeWordKeyword)
+        }
+    }
+
+    /// Filename of a custom .ppn keyword file bundled in the app.
+    @Published var wakeWordCustomFile: String {
+        didSet {
+            UserDefaults.standard.set(wakeWordCustomFile, forKey: Keys.wakeWordCustomFile)
+        }
+    }
+
+    // MARK: - Keychain Properties
+
+    var picovoiceAccessKey: String {
+        get {
+            KeychainHelper.read(key: Keys.picovoiceAccessKey) ?? ""
+        }
+        set {
+            if newValue.isEmpty {
+                KeychainHelper.delete(key: Keys.picovoiceAccessKey)
+            } else {
+                KeychainHelper.save(key: Keys.picovoiceAccessKey, value: newValue)
+            }
+            objectWillChange.send()
+        }
+    }
+
     // MARK: - Keychain Token
     
     var gatewayToken: String {
@@ -53,6 +97,11 @@ final class AppSettings: ObservableObject {
         static let gatewayToken = "gatewayToken"
         static let autoConnect = "autoConnect"
         static let speakResponses = "speakResponses"
+        static let wakeWordEnabled = "wakeWordEnabled"
+        static let wakeWordSensitivity = "wakeWordSensitivity"
+        static let wakeWordKeyword = "wakeWordKeyword"
+        static let wakeWordCustomFile = "wakeWordCustomFile"
+        static let picovoiceAccessKey = "picovoiceAccessKey"
     }
     
     // MARK: - Initialization
@@ -61,9 +110,17 @@ final class AppSettings: ObservableObject {
         self.gatewayURL = UserDefaults.standard.string(forKey: Keys.gatewayURL) ?? ""
         self.autoConnect = UserDefaults.standard.bool(forKey: Keys.autoConnect)
         // Default to true for TTS if not set
-        self.speakResponses = UserDefaults.standard.object(forKey: Keys.speakResponses) == nil 
-            ? true 
+        self.speakResponses = UserDefaults.standard.object(forKey: Keys.speakResponses) == nil
+            ? true
             : UserDefaults.standard.bool(forKey: Keys.speakResponses)
+
+        // Wake word defaults
+        self.wakeWordEnabled = UserDefaults.standard.bool(forKey: Keys.wakeWordEnabled)
+        self.wakeWordSensitivity = UserDefaults.standard.object(forKey: Keys.wakeWordSensitivity) == nil
+            ? 0.5
+            : UserDefaults.standard.float(forKey: Keys.wakeWordSensitivity)
+        self.wakeWordKeyword = UserDefaults.standard.string(forKey: Keys.wakeWordKeyword) ?? "porcupine"
+        self.wakeWordCustomFile = UserDefaults.standard.string(forKey: Keys.wakeWordCustomFile) ?? ""
     }
 }
 
