@@ -51,7 +51,7 @@ final class WakeWordManager: NSObject, ObservableObject {
     private var porcupine: Porcupine?
     private var audioEngine: AVAudioEngine?
     private var audioConverter: AVAudioConverter?
-    private let processingQueue = DispatchQueue(label: "com.hey-neo.wakeword", qos: .userInitiated)
+    private let processingQueue = DispatchQueue(label: "com.hey-neo.wakeword", qos: .utility)
     private var interruptionObserver: NSObjectProtocol?
     private var routeChangeObserver: NSObjectProtocol?
 
@@ -179,7 +179,12 @@ final class WakeWordManager: NSObject, ObservableObject {
             options: [.defaultToSpeaker, .allowBluetooth, .mixWithOthers]
         )
         try session.setActive(true, options: .notifyOthersOnDeactivation)
-        log("Audio session configured.")
+
+        // Request a longer I/O buffer duration to reduce hardware interrupt frequency.
+        // 0.06s (~60ms) balances latency vs power: fewer CPU wake-ups while still
+        // detecting the wake word promptly. Default is ~0.02s (20ms).
+        try session.setPreferredIOBufferDuration(0.06)
+        log("Audio session configured (I/O buffer: \(session.ioBufferDuration)s).")
     }
 
     // MARK: - Audio Engine
@@ -236,10 +241,12 @@ final class WakeWordManager: NSObject, ObservableObject {
         var sampleBuffer = [Int16]()
         let requiredSamples = Int(frameLength)
 
-        // Install tap on input node
-        // Use hardware format for the tap; convert in the processing closure if needed
+        // Install tap on input node.
+        // Use a larger buffer (4096 samples) to reduce callback frequency and CPU wake-ups.
+        // We accumulate samples in sampleBuffer anyway, so larger batches are fine.
+        let tapBufferSize: UInt32 = 4096
         let tapFormat = needsConversion ? hardwareFormat : nil
-        inputNode.installTap(onBus: 0, bufferSize: frameLength, format: tapFormat) { [weak self] buffer, _ in
+        inputNode.installTap(onBus: 0, bufferSize: tapBufferSize, format: tapFormat) { [weak self] buffer, _ in
             guard let self = self else { return }
 
             self.processingQueue.async { [weak self] in
