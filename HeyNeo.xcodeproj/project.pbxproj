@@ -20,6 +20,8 @@
 		A1000011001 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000011000 /* ConnectionState.swift */; };
 		A1000012001 /* GatewayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000012000 /* GatewayMessage.swift */; };
 		A1000013001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000013000 /* Assets.xcassets */; };
+		A1000014001 /* WakeWordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000014000 /* WakeWordManager.swift */; };
+		B1000000002 /* Porcupine in Frameworks */ = {isa = PBXBuildFile; productRef = B1000000001 /* Porcupine */; };
 		A2000001001 /* HeyNeoWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000 /* HeyNeoWatchApp.swift */; };
 		A2000002001 /* HomeWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002000 /* HomeWatchView.swift */; };
 		A2000003001 /* WatchPhoneConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003000 /* WatchPhoneConnectivity.swift */; };
@@ -67,6 +69,7 @@
 		A1000011000 /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		A1000012000 /* GatewayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatewayMessage.swift; sourceTree = "<group>"; };
 		A1000013000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1000014000 /* WakeWordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeWordManager.swift; sourceTree = "<group>"; };
 		A2000000000 /* HeyNeoWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeyNeoWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2000001000 /* HeyNeoWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeyNeoWatchApp.swift; sourceTree = "<group>"; };
 		A2000002000 /* HomeWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWatchView.swift; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1000000002 /* Porcupine in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,10 +131,19 @@
 			children = (
 				A0100002001 /* Gateway */,
 				A0100002002 /* Speech */,
+				A0100002004 /* WakeWord */,
 				A0100002003 /* Settings */,
 				A1000009000 /* WatchConnectivityManager.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		A0100002004 /* WakeWord */ = {
+			isa = PBXGroup;
+			children = (
+				A1000014000 /* WakeWordManager.swift */,
+			);
+			path = WakeWord;
 			sourceTree = "<group>";
 		};
 		A0100002001 /* Gateway */ = {
@@ -288,6 +301,9 @@
 				A3000002001 /* PBXTargetDependency */,
 			);
 			name = HeyNeo;
+			packageProductDependencies = (
+				B1000000001 /* Porcupine */,
+			);
 			productName = HeyNeo;
 			productReference = A1000000000 /* HeyNeo.app */;
 			productType = "com.apple.product-type.application";
@@ -336,6 +352,9 @@
 				Base,
 			);
 			mainGroup = A0000000001;
+			packageReferences = (
+				B1000000000 /* XCRemoteSwiftPackageReference "porcupine" */,
+			);
 			productRefGroup = A0400000000 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -382,6 +401,7 @@
 				A1000010001 /* Message.swift in Sources */,
 				A1000011001 /* ConnectionState.swift in Sources */,
 				A1000012001 /* GatewayMessage.swift in Sources */,
+				A1000014001 /* WakeWordManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,7 +558,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HeyNeo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Hey Neo";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access to transcribe your voice commands.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access for wake word detection and to transcribe your voice commands.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hey Neo uses speech recognition to understand your voice commands.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -572,7 +592,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HeyNeo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Hey Neo";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access to transcribe your voice commands.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access for wake word detection and to transcribe your voice commands.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hey Neo uses speech recognition to understand your voice commands.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -606,7 +626,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Hey Neo";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access to transcribe your voice commands.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access for wake word detection and to transcribe your voice commands.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hey Neo uses speech recognition to understand your voice commands.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.hey-neo.ios";
@@ -637,7 +657,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Hey Neo";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access to transcribe your voice commands.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hey Neo needs microphone access for wake word detection and to transcribe your voice commands.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hey Neo uses speech recognition to understand your voice commands.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.hey-neo.ios";
@@ -689,6 +709,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B1000000000 /* XCRemoteSwiftPackageReference "porcupine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Picovoice/porcupine.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B1000000001 /* Porcupine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1000000000 /* XCRemoteSwiftPackageReference "porcupine" */;
+			productName = Porcupine;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A0000000000 /* Project object */;
 }
